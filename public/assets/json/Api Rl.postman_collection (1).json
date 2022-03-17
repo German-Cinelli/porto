@@ -1,0 +1,612 @@
+{
+	"info": {
+		"_postman_id": "dceaa78b-8dae-4649-8fba-ce3589658dc3",
+		"name": "Api Rl",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Api Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Login\", function(){\r",
+							"    const response = pm.response.json();\r",
+							"    if(response.message != \"invalid_credentials\"){\r",
+							"        pm.response.to.have.jsonBody(\"data\");\r",
+							"        pm.environment.set('token', response.data.token)  \r",
+							"    }else{\r",
+							"        pm.response.to.not.have.body(\"data\");\r",
+							"    }\r",
+							"    \r",
+							"});\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    if(response.message != \"invalid_credentials\"){\r",
+							"        pm.response.to.have.status(200);\r",
+							"    }else{\r",
+							"        pm.response.to.have.status(401);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "rejectUnauthorized",
+						"value": "false",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "{{user}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{Host}}/api/auth/login",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Api Refresh",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Login\", function(){\r",
+							"    const response = pm.response.json();\r",
+							"    if(response.message == \"token_refreshed\"){\r",
+							"        pm.response.to.have.jsonBody(\"data\");\r",
+							"        pm.environment.set('token', response.data.token)  \r",
+							"    }else{\r",
+							"        pm.response.to.not.have.body(\"data\");\r",
+							"    }\r",
+							"    \r",
+							"});\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    if(response.message != \"Token Signature could not be verified.\"){\r",
+							"        pm.response.to.have.status(200);\r",
+							"    }else{\r",
+							"        pm.response.to.have.status(401);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "rejectUnauthorized",
+						"type": "text",
+						"value": "false"
+					},
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{Host}}/api/auth/refresh",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Api Invalidate",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Login\", function(){\r",
+							"    const response = pm.response.json();\r",
+							"    if(response.message == \"token_refreshed\"){\r",
+							"        pm.response.to.have.jsonBody(\"data\");\r",
+							"        pm.environment.set('token', response.data.token)  \r",
+							"    }else{\r",
+							"        pm.response.to.not.have.body(\"data\");\r",
+							"    }\r",
+							"    \r",
+							"});\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    if(response.message != \"Token Signature could not be verified.\"){\r",
+							"        pm.response.to.have.status(200);\r",
+							"    }else{\r",
+							"        pm.response.to.have.status(401);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "rejectUnauthorized",
+						"type": "text",
+						"value": "false"
+					},
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "hammes.anibal@example.net",
+							"type": "text"
+						},
+						{
+							"key": "usuario",
+							"value": "SUPER",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{Host}}/api/auth/invalidate",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"invalidate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api crear reserva",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "rejectUnauthorized",
+						"value": "false",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "idUbicacion",
+							"value": "1",
+							"description": "Id de la ubicacion obtenida con el Obtener Ubicaciones",
+							"type": "text"
+						},
+						{
+							"key": "idTamano",
+							"value": "3",
+							"description": "Id del tamano requerido obtenido desde el Obtener Tamanos",
+							"type": "text"
+						},
+						{
+							"key": "vencimiento",
+							"value": "5",
+							"description": "Dias para vencer la reserva",
+							"type": "text"
+						},
+						{
+							"key": "idInterno",
+							"value": "pruebaapi",
+							"description": "identificador del sistema del usuario",
+							"type": "text"
+						},
+						{
+							"key": "correo",
+							"value": "antoniojoseqp@hotmail.com",
+							"description": "correo de la persona a retirar el paquete",
+							"type": "text"
+						},
+						{
+							"key": "celular",
+							"value": "093991731",
+							"description": "celular de la persona a retirar el paquete",
+							"type": "text"
+						},
+						{
+							"key": "ci",
+							"value": "093991731",
+							"description": "cedula de la persona a retirar el paquete",
+							"type": "text"
+						},
+						{
+							"key": "notificacion",
+							"value": "1",
+							"description": "flag de notificacion interna",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{Host}}/api/reservas",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"api",
+						"reservas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "obtener reservas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "rejectUnauthorized",
+						"value": "false",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{Host}}/api/reservas",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"api",
+						"reservas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api obtener ubicaciones",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "rejectUnauthorized",
+						"value": "false",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{Host}}/api/ubicaciones",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"api",
+						"ubicaciones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Api Estado ",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(pm.request.body);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer {{Token_login}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{Host}}/api/auth/user",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api obtener tamanos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "rejectUnauthorized",
+						"value": "false",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{Host}}/api/tamanos",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"api",
+						"tamanos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Disponibilidad",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{Host}}/api/disponibilidad/1",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"api",
+						"disponibilidad",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

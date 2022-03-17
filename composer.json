@@ -1,0 +1,24 @@
+{
+    "name": "sevencrows/mini-framework-php",
+    "description": "PHP mini-framework MVC",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "gerzhx",
+            "email": "ger.cs28@gmail.com"
+        }
+    ],
+    "require": {
+        "larapack/dd": "^1.1",
+        "doctrine/dbal": "^2.10",
+        "symfony/translation": "^4.4",
+        "symfony/translation-contracts": "1.1.6",
+        "nesbot/carbon": "^2.28",
+        "rakit/validation": "^1.2",
+        "phpmailer/phpmailer": "^6.1",
+        "kwn/number-to-words": "^1.9",
+        "illuminate/database": "^6.6",
+        "illuminate/pagination": "^6.18.15",
+        "mercadopago/dx-php": "^2.1"
+    }
+}
